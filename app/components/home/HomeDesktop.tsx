@@ -8,6 +8,7 @@ export function HomeDesktop({data}: {data: HomeData}) {
       </p>
       <h1 className="mt-space-xs font-display-xl text-display-xl text-primary">
         Homepage coming soon
+        <span className="material-symbols-outlined icon-filled text-secondary-container">star</span>
       </h1>
       <p className="mt-space-md font-body-lg text-body-lg text-on-surface-variant">
         Featured Collection: {data.featuredCollection?.title}

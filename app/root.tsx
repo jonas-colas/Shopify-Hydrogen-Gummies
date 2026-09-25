@@ -17,6 +17,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 // import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
+import {fontLinks} from './lib/fonts';
 
 export type RootLoader = typeof loader;
 
@@ -62,6 +63,7 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
+    ...fontLinks,
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 }

@@ -194,3 +194,8 @@
     display: none;
   }
 }
+
+/* Filled Material Symbols icon, e.g solid stars */
+@utility icon-filled {
+  font-variation-settings: 'FILL' 1;
+}
