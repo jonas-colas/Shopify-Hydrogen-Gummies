@@ -7,7 +7,11 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
-import {MockShopNotice} from '~/components/MockShopNotice';
+// import {MockShopNotice} from '~/components/MockShopNotice';
+import { HomeMobile } from '~/components/home/HomeMobile';
+import { HomeDesktop } from '~/components/home/HomeDesktop';
+
+export type HomeData = Route.ComponentProps['loaderData'];
 
 export const meta: Route.MetaFunction = () => {
   return [{title: 'Gummies | Home'}];
@@ -61,11 +65,15 @@ function loadDeferredData({context}: Route.LoaderArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="home">
-      {data.isShopLinked ? null : <MockShopNotice />}
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
-    </div>
+    <>
+    <div className="md:hidden"> <HomeMobile data={data} /> </div>
+    <div className="hidden md:block"> <HomeDesktop data={data} /> </div>
+    </>
+    // <div className="home">
+    //   {data.isShopLinked ? null : <MockShopNotice />}
+    //   <FeaturedCollection collection={data.featuredCollection} />
+    //   <RecommendedProducts products={data.recommendedProducts} />
+    // </div>
   );
 }
 
