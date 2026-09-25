@@ -10,7 +10,7 @@ import {ProductItem} from '~/components/ProductItem';
 import {MockShopNotice} from '~/components/MockShopNotice';
 
 export const meta: Route.MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Gummies | Home'}];
 };
 
 export async function loader(args: Route.LoaderArgs) {
