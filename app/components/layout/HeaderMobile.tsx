@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router';
 import type { CartApiQueryFragment, HeaderQuery } from 'storefrontapi.generated';
 import { useAside } from '~/components/Aside';
-import { CartButton } from './CartButton';
+// import { CartButton } from './CartButton';
 
 type HeaderMobileProps = {
   header: HeaderQuery;
@@ -61,7 +61,7 @@ export function HeaderMobile({header, cart}: HeaderMobileProps) {
             </span>
           </button>
 
-          <CartButton cart={cart} variant="mobile" />
+          {/* <CartButton cart={cart} variant="mobile" /> */}
 
           <NavLink
             to="/account"
