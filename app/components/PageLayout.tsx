@@ -7,7 +7,12 @@ import type {
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu} from '~/components/Header';
+// import {Header, HeaderMenu} from '~/components/Header';
+import { HeaderMenu } from './Header';
+import { HeaderDesktop } from './layout/HeaderDesktop';
+import { HeaderMobile } from './layout/HeaderMobile';
+import { MobileTabBar } from './layout/MobileTabBar';
+
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -38,12 +43,24 @@ export function PageLayout({
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       {header && (
-        <Header
-          header={header}
-          cart={cart}
-          isLoggedIn={isLoggedIn}
-          publicStoreDomain={publicStoreDomain}
-        />
+        // <Header
+        //   header={header}
+        //   cart={cart}
+        //   isLoggedIn={isLoggedIn}
+        //   publicStoreDomain={publicStoreDomain}
+        // />
+        <>
+          <div className="sticky top-0 z-40 md:hidden">
+            <HeaderMobile header={header} cart={cart} />
+          </div>
+          <div className="sticky top-0 z-40 hidden md:block">
+            <HeaderDesktop
+              header={header}
+              cart={cart}
+              publicStoreDomain={publicStoreDomain}
+            />
+          </div>
+        </>
       )}
       <main>{children}</main>
       <Footer
@@ -51,6 +68,7 @@ export function PageLayout({
         header={header}
         publicStoreDomain={publicStoreDomain}
       />
+      <MobileTabBar cart={cart} />
     </Aside.Provider>
   );
 }
