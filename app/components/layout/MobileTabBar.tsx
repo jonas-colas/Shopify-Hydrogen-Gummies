@@ -39,7 +39,7 @@ export function MobileTabBar({cart}: MobileTabBarProps) {
             >
               <span
                 aria-hidden="true"
-                className="material-symbols-outlined text-[22px]"
+                className="icon text-[22px]"
               >
                 {tab.icon}
               </span>

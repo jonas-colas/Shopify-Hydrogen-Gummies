@@ -17,7 +17,7 @@ export function HeaderDesktop({header, cart, publicStoreDomain}: HeaderDesktopPr
     <header className="bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
       {/* Announcement bar */}
       <div className="bg-primary-container text-on-primary py-space-xs px-margin-mobile lg:px-margin text-center font-scientific-code text-scientific-code tracking-wider uppercase flex items-center justify-center gap-space-xs">
-        <span aria-hidden="true" className="material-symbols-outlined text-[16px] text-secondary-container">bolt</span>
+        <span aria-hidden="true" className="icon text-[16px] text-secondary-container">bolt</span>
         <span>BOGO 50% OFF SITEWIDE • FAST 15-MIN ABSORPTION • FREE DISCREET SHIPPING ON $50+</span>
         {/* <span>Free shipping on orders over $50</span> */}
       </div>
@@ -30,7 +30,7 @@ export function HeaderDesktop({header, cart, publicStoreDomain}: HeaderDesktopPr
             onClick={() => open('mobile')}
             className="xl:hidden p-space-xs text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center"
           >
-            <span aria-hidden="true" className="material-symbols-outlined text-[24px]"> menu </span>
+            <span aria-hidden="true" className="icon text-[24px]"> menu </span>
           </button>
           <NavLink to="/" end prefetch="intent" className="flex items-center gap-space-xs group">
             <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-md text-headline-md tracking-tight shadow-md group-hover:scale-105 transition-transform">
@@ -67,9 +67,9 @@ export function HeaderDesktop({header, cart, publicStoreDomain}: HeaderDesktopPr
           </nav>
         </div>
         
-        <div className='flex items-center gap-space-sm md:gap-space--md'>
+        <div className='flex items-center gap-space-sm md:gap-space-md'>
           <Form method='get' action='/search' role='search' className='hidden md:flex items-center bg-surface-container-lowest rounded-full px-space-md py-space-xs shadow-[0_1px_4px_rgba(0,0,0,0.03)] focus-within:shadow-[0_0_0_2px_rgba(53,15,84,0.15)] transition-all w-52 lg:w-64'>
-            <span aria-hidden='true' className='material-symbols-outlined text-[18px] text-outline mr-space-xs'>
+            <span aria-hidden='true' className='icon text-[18px] text-outline mr-space-xs'>
               search
             </span>
             <input
@@ -86,7 +86,7 @@ export function HeaderDesktop({header, cart, publicStoreDomain}: HeaderDesktopPr
             aria-label='Account'
             className='p-space-xs text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center'
           >
-            <span aria-hidden className='material-symbols-outlined text-[22px]'>person</span>
+            <span aria-hidden className='icon text-[22px]'>person</span>
           </NavLink>
           <CartButton cart={cart} variant='desktop' />
         </div>

@@ -16,7 +16,7 @@ export function HeaderMobile({header, cart}: HeaderMobileProps) {
     <header className="pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
       {/* Announcement bar */}
       <div className="bg-primary-container text-on-primary text-center py-space-2xs px-margin-mobile flex items-center justify-center gap-space-xs">
-        <span aria-hidden className="material-symbols-outlined text-[14px] text-secondary-container"> bolt </span>
+        <span aria-hidden className="icon text-[14px] text-secondary-container"> bolt </span>
         <p className="font-label-sm text-label-sm tracking-wide uppercase font-semibold text-primary-fixed">BOGO 50% OFF SITEWIDE • FAST 15-MIN ONSET</p>
       </div>
       <div className="h-16 px-margin-mobile flex items-center justify-between gap-space-xs">
@@ -25,7 +25,7 @@ export function HeaderMobile({header, cart}: HeaderMobileProps) {
            onClick={() => open('mobile')}
            className="w-11 h-11 flex items-center justify-center text-primary-container active:scale-95 transition-transform"
           >
-            <span aria-hidden className="material-symbols-outlined text-[24px]"> menu </span>
+            <span aria-hidden className="icon text-[24px]"> menu </span>
           </button>
           <NavLink
             to="/"
@@ -36,7 +36,7 @@ export function HeaderMobile({header, cart}: HeaderMobileProps) {
             <span className="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center text-primary-fixed">
               <span
                 aria-hidden="true"
-                className="material-symbols-outlined text-[16px]"
+                className="icon text-[16px]"
               >
                 spa
               </span>
@@ -55,7 +55,7 @@ export function HeaderMobile({header, cart}: HeaderMobileProps) {
           >
             <span
               aria-hidden="true"
-              className="material-symbols-outlined text-[22px]"
+              className="icon text-[22px]"
             >
               search
             </span>
@@ -71,7 +71,7 @@ export function HeaderMobile({header, cart}: HeaderMobileProps) {
           >
             <span
               aria-hidden="true"
-              className="material-symbols-outlined text-on-primary text-[18px]"
+              className="icon text-on-primary text-[18px]"
             >
               person
             </span>
