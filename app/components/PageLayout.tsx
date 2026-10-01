@@ -6,8 +6,10 @@ import type {
   HeaderQuery,
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
-import {Footer} from '~/components/Footer';
+// import {Footer} from '~/components/Footer';
 // import {Header, HeaderMenu} from '~/components/Header';
+import {FooterDesktop} from '~/components/layout/FooterDesktop';
+import {FooterMobile} from '~/components/layout/FooterMobile';
 import { HeaderMenu } from './Header';
 import { HeaderDesktop } from './layout/HeaderDesktop';
 import { HeaderMobile } from './layout/HeaderMobile';
@@ -42,33 +44,38 @@ export function PageLayout({
       <CartAside cart={cart} />
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      {header && (
-        // <Header
-        //   header={header}
-        //   cart={cart}
-        //   isLoggedIn={isLoggedIn}
-        //   publicStoreDomain={publicStoreDomain}
-        // />
-        <>
-          <div className="sticky top-0 z-40 md:hidden">
-            <HeaderMobile header={header} cart={cart} />
-          </div>
-          <div className="sticky top-0 z-40 hidden md:block">
-            <HeaderDesktop
-              header={header}
-              cart={cart}
-              publicStoreDomain={publicStoreDomain}
-            />
-          </div>
-        </>
-      )}
-      <main>{children}</main>
-      <Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      />
-      <MobileTabBar cart={cart} />
+      {/* Column layout keeps the footer at the bottom of short pages */}
+      <div className="flex min-h-dvh flex-col">
+        <div className="sticky top-0 z-40 md:hidden">
+          <HeaderMobile header={header} cart={cart} />
+        </div>
+        <div className="sticky top-0 z-40 hidden md:block">
+          <HeaderDesktop
+            header={header}
+            cart={cart}
+            publicStoreDomain={publicStoreDomain}
+          />
+        </div>
+
+        <main className="flex-1">{children}</main>
+
+        <div className="md:hidden">
+          <FooterMobile
+            footer={footer}
+            header={header}
+            publicStoreDomain={publicStoreDomain}
+          />
+        </div>
+        <div className="hidden md:block">
+          <FooterDesktop
+            footer={footer}
+            header={header}
+            publicStoreDomain={publicStoreDomain}
+          />
+        </div>
+
+        <MobileTabBar cart={cart} />
+      </div>
     </Aside.Provider>
   );
 }

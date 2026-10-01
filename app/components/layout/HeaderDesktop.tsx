@@ -1,6 +1,7 @@
 import {Form, NavLink} from 'react-router';
 import type {CartApiQueryFragment, HeaderQuery} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {toRelativeUrl} from '~/lib/menu';
 import {CartButton} from './CartButton';
 
 type HeaderDesktopProps = {
@@ -96,9 +97,9 @@ export function HeaderDesktop({header, cart, publicStoreDomain}: HeaderDesktopPr
 }
         
 
-function toRelativeUrl(url: string, primaryDomainUrl: string, publicStoreDomain: string) {
-  if(url.startsWith('/')) return url;
-  const isInternal = url.includes('myshopify.com') || url.includes(publicStoreDomain) || url.includes(primaryDomainUrl);
+// function toRelativeUrl(url: string, primaryDomainUrl: string, publicStoreDomain: string) {
+//   if(url.startsWith('/')) return url;
+//   const isInternal = url.includes('myshopify.com') || url.includes(publicStoreDomain) || url.includes(primaryDomainUrl);
 
-  return isInternal ? new URL(url).pathname : url;
-}
+//   return isInternal ? new URL(url).pathname : url;
+// }
