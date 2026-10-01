@@ -69,7 +69,7 @@ export function HeroMobile({collection}: HeroMobileProps) {
           </span>
         </Link>
         <a
-          href="#science"
+          href="#science-mobile"
           className="w-full h-11 rounded-full bg-surface-container-low text-primary-container font-label-md text-label-md flex items-center justify-center gap-space-xs active:bg-surface-container-high transition-colors"
         >
           <span
