@@ -57,17 +57,32 @@ function loadDeferredData({context}: Route.LoaderArgs) {
       return null;
     });
 
+  //   return {
+  //     recommendedProducts,
+  //   };
+  // }
+  // "Customer Favorites" section: products of this collection
+  const favorites = context.storefront
+    .query(FAVORITES_QUERY, {variables: {handle: FAVORITES_COLLECTION}})
+    .catch((error: Error) => {
+      console.error(error);
+      return null;
+    });
+
   return {
     recommendedProducts,
+    favorites,
   };
 }
+
+  
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <>
-    <div className="md:hidden"> <HomeMobile data={data} /> </div>
-    <div className="hidden md:block"> <HomeDesktop data={data} /> </div>
+      <div className="md:hidden"> <HomeMobile data={data} /> </div>
+      <div className="hidden md:block"> <HomeDesktop data={data} /> </div>
     </>
     // <div className="home">
     //   {data.isShopLinked ? null : <MockShopNotice />}
@@ -223,6 +238,70 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     products(first: 4, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
+      }
+    }
+  }
+` as const;
+
+
+/** Collection behind the homepage "Customer Favorites" section */
+const FAVORITES_COLLECTION = 'customer-favorites';
+
+const FAVORITES_QUERY = `#graphql
+  fragment FavoriteProduct on Product {
+    id
+    title
+    handle
+    description
+    tags
+    featuredImage {
+      id
+      url
+      altText
+      width
+      height
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        availableForSale
+        price {
+          amount
+          currencyCode
+        }
+        compareAtPrice {
+          amount
+          currencyCode
+        }
+      }
+    }
+    badge: metafield(namespace: "custom", key: "badge") {
+      value
+    }
+    dosage: metafield(namespace: "custom", key: "dosage") {
+      value
+    }
+    packSize: metafield(namespace: "custom", key: "pack_size") {
+      value
+    }
+    rating: metafield(namespace: "reviews", key: "rating") {
+      value
+    }
+    ratingCount: metafield(namespace: "reviews", key: "rating_count") {
+      value
+    }
+  }
+  query HomeFavorites(
+    $handle: String!
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    collection(handle: $handle) {
+      handle
+      products(first: 4) {
+        nodes {
+          ...FavoriteProduct
+        }
       }
     }
   }

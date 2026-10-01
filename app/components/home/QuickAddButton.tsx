@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import type {FetcherWithComponents} from 'react-router';
 import {CartForm} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
@@ -7,6 +8,10 @@ type QuickAddButtonProps = {
   available: boolean;
   productTitle: string;
   className: string;
+  /** Material Symbols icon name, or null for a text-only button */
+  icon?: string | null;
+  /** Optional visible text, e.g. "Quick Add" */
+  label?: ReactNode;
 };
 
 /** Round "+" button that adds one unit of a variant and opens the cart. */
@@ -15,6 +20,8 @@ export function QuickAddButton({
   available,
   productTitle,
   className,
+  icon = 'add',
+  label,
 }: QuickAddButtonProps) {
   const {open} = useAside();
 
@@ -42,9 +49,12 @@ export function QuickAddButton({
             aria-label={`Add ${productTitle} to cart`}
             className={className}
           >
-            <span aria-hidden="true" className="icon text-[20px]">
-              {isAdding ? 'hourglass_bottom' : 'add'}
-            </span>
+            {icon && ( 
+               <span aria-hidden="true" className="icon text-[20px]">
+                {isAdding ? 'hourglass_bottom' : icon}
+              </span>
+            )}
+            {label && <span>{isAdding ? 'Adding' : label}</span>}
           </button>
         );
       }}
