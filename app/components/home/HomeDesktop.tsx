@@ -4,6 +4,7 @@ import {ProductGridDesktop} from './ProductGridDesktop';
 import { TrustStripDesktop } from './TrustStrip';
 import { ScienceDesktop } from './ScienceSection';
 import { FavoritesDesktop } from './Favorites';
+import { ReviewsDesktop } from './Reviews';
 
 export function HomeDesktop({data}: {data: HomeData}) {
   return (
@@ -13,6 +14,7 @@ export function HomeDesktop({data}: {data: HomeData}) {
       <ProductGridDesktop products={data.featuredCollection?.products.nodes ?? []} />
       <ScienceDesktop />
       <FavoritesDesktop favorites={data.favorites} />
+      <ReviewsDesktop />
     </>
   );
 }
