@@ -1,6 +1,12 @@
 import {Suspense} from 'react';
 import {Await} from 'react-router';
-import { type CartViewPayload, type OptimisticCart, Money, useAnalytics, useOptimisticCart } from '@shopify/hydrogen';
+import {
+  type CartViewPayload,
+  type OptimisticCart,
+  Money,
+  useAnalytics,
+  useOptimisticCart,
+} from '@shopify/hydrogen';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 
@@ -14,20 +20,36 @@ type CartButtonProps = {
 export function CartButton({cart, variant}: CartButtonProps) {
   return (
     <Suspense fallback={<CartLink cart={null} variant={variant} />}>
-      <Await resolve={cart} errorElement={<CartLink cart={null} variant={variant} />}>
-        {(resolvedCart) => (<OptimisticCartLink cart={resolvedCart} variant={variant} />)}
+      <Await
+        resolve={cart}
+        errorElement={<CartLink cart={null} variant={variant} />}
+      >
+        {(resolvedCart) => (
+          <OptimisticCartLink cart={resolvedCart} variant={variant} />
+        )}
       </Await>
     </Suspense>
   );
 }
 
-function OptimisticCartLink({cart, variant}: {cart: CartApiQueryFragment | null; variant: CartButtonVariant}) {
-
+function OptimisticCartLink({
+  cart,
+  variant,
+}: {
+  cart: CartApiQueryFragment | null;
+  variant: CartButtonVariant;
+}) {
   const optimisticCart = useOptimisticCart(cart);
   return <CartLink cart={optimisticCart} variant={variant} />;
 }
 
-function CartLink({cart, variant}: {cart: OptimisticCart<CartApiQueryFragment | null> | null; variant: CartButtonVariant}) {
+function CartLink({
+  cart,
+  variant,
+}: {
+  cart: OptimisticCart<CartApiQueryFragment | null> | null;
+  variant: CartButtonVariant;
+}) {
   const {open} = useAside();
   const {publish, shop, cart: analyticsCart, prevCart} = useAnalytics();
   const count = cart?.totalQuantity ?? 0;
@@ -52,16 +74,21 @@ function CartLink({cart, variant}: {cart: OptimisticCart<CartApiQueryFragment | 
         aria-label={`Cart, ${count} items`}
         className="flex items-center justify-center gap-space-2xs h-11 px-space-md rounded-full bg-primary-container text-primary-fixed shadow-[0_2px_8px_-2px_rgba(15,23,42,0.04)] active:scale-95 transition-transform"
       >
-       <span aria-hidden="true" className="icon text-[20px] text-secondary-fixed">shopping_bag</span>
+        <span
+          aria-hidden="true"
+          className="icon text-[20px] text-secondary-fixed"
+        >
+          shopping_bag
+        </span>
         <span className="font-label-md text-label-md font-semibold text-on-primary">
           {count > 0 && total ? <Money data={total} /> : 'Cart'}
         </span>
       </a>
-    )
+    );
   }
-  
+
   const isDesktop = variant === 'desktop';
-  
+
   return (
     <a
       href="/cart"
@@ -73,9 +100,11 @@ function CartLink({cart, variant}: {cart: OptimisticCart<CartApiQueryFragment | 
           : 'relative w-11 h-11 flex items-center justify-center text-primary-container active:scale-95 transition-transform'
       }
     >
-      <span aria-hidden="true" className="icon text-[22px]">shopping_bag</span>
+      <span aria-hidden="true" className="icon text-[22px]">
+        shopping_bag
+      </span>
       {count > 0 && (
-        <span 
+        <span
           aria-hidden="true"
           className={
             isDesktop

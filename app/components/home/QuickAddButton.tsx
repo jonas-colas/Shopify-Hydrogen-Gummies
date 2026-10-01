@@ -49,8 +49,8 @@ export function QuickAddButton({
             aria-label={`Add ${productTitle} to cart`}
             className={className}
           >
-            {icon && ( 
-               <span aria-hidden="true" className="icon text-[20px]">
+            {icon && (
+              <span aria-hidden="true" className="icon text-[20px]">
                 {isAdding ? 'hourglass_bottom' : icon}
               </span>
             )}

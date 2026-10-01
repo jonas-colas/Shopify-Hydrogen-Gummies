@@ -6,14 +6,12 @@ import type {
   HeaderQuery,
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
-// import {Footer} from '~/components/Footer';
-// import {Header, HeaderMenu} from '~/components/Header';
 import {FooterDesktop} from '~/components/layout/FooterDesktop';
 import {FooterMobile} from '~/components/layout/FooterMobile';
-import { HeaderMenu } from './Header';
-import { HeaderDesktop } from './layout/HeaderDesktop';
-import { HeaderMobile } from './layout/HeaderMobile';
-import { MobileTabBar } from './layout/MobileTabBar';
+import {HeaderMenu} from './Header';
+import {HeaderDesktop} from './layout/HeaderDesktop';
+import {HeaderMobile} from './layout/HeaderMobile';
+import {MobileTabBar} from './layout/MobileTabBar';
 
 import {CartMain} from '~/components/CartMain';
 import {
@@ -36,7 +34,6 @@ export function PageLayout({
   children = null,
   footer,
   header,
-  isLoggedIn,
   publicStoreDomain,
 }: PageLayoutProps) {
   return (
@@ -47,7 +44,7 @@ export function PageLayout({
       {/* Column layout keeps the footer at the bottom of short pages */}
       <div className="flex min-h-dvh flex-col">
         <div className="sticky top-0 z-40 md:hidden">
-          <HeaderMobile header={header} cart={cart} />
+          <HeaderMobile header={header} />
         </div>
         <div className="sticky top-0 z-40 hidden md:block">
           <HeaderDesktop

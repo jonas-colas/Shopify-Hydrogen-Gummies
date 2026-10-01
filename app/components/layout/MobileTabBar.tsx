@@ -1,6 +1,6 @@
-import { NavLink } from "react-router";
-import type { CartApiQueryFragment } from "storefrontapi.generated";
-import { CartButton } from "./CartButton";
+import {NavLink} from 'react-router';
+import type {CartApiQueryFragment} from 'storefrontapi.generated';
+import {CartButton} from './CartButton';
 
 const TABS = [
   {to: '/', label: 'Home', icon: 'home'},
@@ -9,7 +9,7 @@ const TABS = [
 ];
 
 type MobileTabBarProps = {
-  cart: Promise<CartApiQueryFragment | null>
+  cart: Promise<CartApiQueryFragment | null>;
 };
 
 export function MobileTabBar({cart}: MobileTabBarProps) {
@@ -37,10 +37,7 @@ export function MobileTabBar({cart}: MobileTabBarProps) {
                 }`
               }
             >
-              <span
-                aria-hidden="true"
-                className="icon text-[22px]"
-              >
+              <span aria-hidden="true" className="icon text-[22px]">
                 {tab.icon}
               </span>
               <span className="font-label-sm text-label-sm">{tab.label}</span>
@@ -51,5 +48,5 @@ export function MobileTabBar({cart}: MobileTabBarProps) {
         </div>
       </nav>
     </>
-  )
+  );
 }

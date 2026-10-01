@@ -1,14 +1,12 @@
 import {NavLink} from 'react-router';
-import type {CartApiQueryFragment, HeaderQuery} from 'storefrontapi.generated';
+import type {HeaderQuery} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
-// import {CartButton} from './CartButton';
 
 type HeaderMobileProps = {
   header: HeaderQuery;
-  cart: Promise<CartApiQueryFragment | null>;
 };
 
-export function HeaderMobile({header, cart}: HeaderMobileProps) {
+export function HeaderMobile({header}: HeaderMobileProps) {
   const {shop} = header;
   const {open} = useAside();
 
@@ -71,8 +69,6 @@ export function HeaderMobile({header, cart}: HeaderMobileProps) {
         </NavLink>
 
         <div className="flex items-center justify-end gap-space-xs">
-          {/* <CartButton cart={cart} variant="mobile" /> */}
-
           <NavLink
             to="/account"
             prefetch="intent"

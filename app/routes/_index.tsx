@@ -1,15 +1,7 @@
-import {Await, useLoaderData, Link} from 'react-router';
+import {useLoaderData} from 'react-router';
 import type {Route} from './+types/_index';
-import {Suspense} from 'react';
-import {Image} from '@shopify/hydrogen';
-import type {
-  FeaturedCollectionFragment,
-  RecommendedProductsQuery,
-} from 'storefrontapi.generated';
-import {ProductItem} from '~/components/ProductItem';
-// import {MockShopNotice} from '~/components/MockShopNotice';
-import { HomeMobile } from '~/components/home/HomeMobile';
-import { HomeDesktop } from '~/components/home/HomeDesktop';
+import {HomeDesktop} from '~/components/home/HomeDesktop';
+import {HomeMobile} from '~/components/home/HomeMobile';
 
 export type HomeData = Route.ComponentProps['loaderData'];
 
@@ -28,39 +20,24 @@ export async function loader(args: Route.LoaderArgs) {
 }
 
 /**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
+ * Data needed above the fold: hero and product grid.
+ * If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: Route.LoaderArgs) {
-  const [{collections}] = await Promise.all([
-    context.storefront.query(FEATURED_COLLECTION_QUERY),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
+  const {collections} = await context.storefront.query(
+    FEATURED_COLLECTION_QUERY,
+  );
 
   return {
-    isShopLinked: Boolean(context.env.PUBLIC_STORE_DOMAIN),
     featuredCollection: collections.nodes[0],
   };
 }
 
 /**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
+ * Data below the fold, streamed in after the first render.
+ * Never throw here: a failed query should not turn the page into a 500.
  */
 function loadDeferredData({context}: Route.LoaderArgs) {
-  const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
-    .catch((error: Error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return null;
-    });
-
-  //   return {
-  //     recommendedProducts,
-  //   };
-  // }
   // "Customer Favorites" section: products of this collection
   const favorites = context.storefront
     .query(FAVORITES_QUERY, {variables: {handle: FAVORITES_COLLECTION}})
@@ -69,81 +46,21 @@ function loadDeferredData({context}: Route.LoaderArgs) {
       return null;
     });
 
-  return {
-    recommendedProducts,
-    favorites,
-  };
+  return {favorites};
 }
-
-  
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+
   return (
     <>
-      <div className="md:hidden"> <HomeMobile data={data} /> </div>
-      <div className="hidden md:block"> <HomeDesktop data={data} /> </div>
+      <div className="md:hidden">
+        <HomeMobile data={data} />
+      </div>
+      <div className="hidden md:block">
+        <HomeDesktop data={data} />
+      </div>
     </>
-    // <div className="home">
-    //   {data.isShopLinked ? null : <MockShopNotice />}
-    //   <FeaturedCollection collection={data.featuredCollection} />
-    //   <RecommendedProducts products={data.recommendedProducts} />
-    // </div>
-  );
-}
-
-function FeaturedCollection({
-  collection,
-}: {
-  collection: FeaturedCollectionFragment;
-}) {
-  if (!collection) return null;
-  const image = collection?.image;
-  return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image
-            data={image}
-            sizes="100vw"
-            alt={image.altText || collection.title}
-          />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
-  );
-}
-
-function RecommendedProducts({
-  products,
-}: {
-  products: Promise<RecommendedProductsQuery | null>;
-}) {
-  return (
-    <section
-      className="recommended-products"
-      aria-labelledby="recommended-products"
-    >
-      <h2 id="recommended-products">Recommended Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {(response) => (
-            <div className="recommended-products-grid">
-              {response
-                ? response.products.nodes.map((product) => (
-                    <ProductItem key={product.id} product={product} />
-                  ))
-                : null}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
-    </section>
   );
 }
 
@@ -213,36 +130,6 @@ const FEATURED_COLLECTION_QUERY = `#graphql
     }
   }
 ` as const;
-
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
-    id
-    title
-    handle
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    featuredImage {
-      id
-      url
-      altText
-      width
-      height
-    }
-  }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...RecommendedProduct
-      }
-    }
-  }
-` as const;
-
 
 /** Collection behind the homepage "Customer Favorites" section */
 const FAVORITES_COLLECTION = 'customer-favorites';

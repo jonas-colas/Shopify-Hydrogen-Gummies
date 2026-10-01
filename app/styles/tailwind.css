@@ -61,21 +61,21 @@
   --color-tertiary-fixed-dim: #ffb2be;
 
   /* Fonts (each type style names its own family) */
-  --font-body-lg: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-body-md: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-body-sm: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display-xl: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-display-xl-mobile: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-headline-lg: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-headline-lg-mobile: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-headline-md: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-headline-sm: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-label-lg: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-label-md: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-label-sm: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-scientific-code: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-title-lg: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-title-md: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body-lg: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-body-md: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-body-sm: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display-xl: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-display-xl-mobile: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg-mobile: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-headline-md: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-headline-sm: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-label-lg: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-label-md: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-label-sm: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-scientific-code: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-title-lg: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-title-md: 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   /* Type scale: size + line-height + letter-spacing + weight */
   --text-body-lg: 18px;
@@ -200,7 +200,6 @@
     -webkit-font-smoothing: antialiased;
   }
 }
-
 
 /* Custom utilities from the mobile designs */
 @utility pt-safe {

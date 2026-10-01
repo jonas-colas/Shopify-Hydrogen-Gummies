@@ -1,21 +1,21 @@
-import { Link, useLoaderData } from 'react-router';
-import { Image, Money } from '@shopify/hydrogen';
-import type { Route } from './+types/lab';
+import {Link, useLoaderData} from 'react-router';
+import {Image, Money} from '@shopify/hydrogen';
+import type {Route} from './+types/lab';
 
 export const meta: Route.MetaFunction = () => {
-  return [{ title: 'Gummies | Lab' }];
+  return [{title: 'Gummies | Lab'}];
 };
 
-export async function loader({ context }: Route.LoaderArgs) {
-  const { shop, products } = await context.storefront.query(LAB_QUERY, {
-    variables: { first: 3 },
+export async function loader({context}: Route.LoaderArgs) {
+  const {shop, products} = await context.storefront.query(LAB_QUERY, {
+    variables: {first: 3},
   });
 
   return {shop, products: products.nodes};
 }
 
 export default function Lab() {
-  const {shop, products } = useLoaderData<typeof loader>();
+  const {shop, products} = useLoaderData<typeof loader>();
 
   return (
     <div className="p-8">
