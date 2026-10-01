@@ -133,6 +133,45 @@ function RecommendedProducts({
 }
 
 const FEATURED_COLLECTION_QUERY = `#graphql
+  fragment HomeGridProduct on Product {
+    id
+    title
+    handle
+    description
+    tags
+    availableForSale
+    featuredImage {
+      id
+      url
+      altText
+      width
+      height
+    }
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        availableForSale
+      }
+    }
+    badge: metafield(namespace: "custom", key: "badge") {
+      value
+    }
+    dosage: metafield(namespace: "custom", key: "dosage") {
+      value
+    }
+    highlight: metafield(namespace: "custom", key: "highlight") {
+      value
+    }
+    packSize: metafield(namespace: "custom", key: "pack_size") {
+      value
+    }
+  }
   fragment FeaturedCollection on Collection {
     id
     title
@@ -144,6 +183,11 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       height
     }
     handle
+    products(first: 4) {
+      nodes {
+        ...HomeGridProduct
+      }
+    }
   }
   query FeaturedCollection($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
