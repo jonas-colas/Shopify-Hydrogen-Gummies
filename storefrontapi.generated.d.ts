@@ -436,104 +436,60 @@ export type FeaturedCollectionFragment = Pick<
 };
 
 export type FeaturedCollectionQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
   country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
   language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
 }>;
 
 export type FeaturedCollectionQuery = {
-  collections: {
-    nodes: Array<
-      Pick<StorefrontAPI.Collection, 'id' | 'title' | 'handle'> & {
-        image?: StorefrontAPI.Maybe<
+  collection?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Collection, 'id' | 'title' | 'handle'> & {
+      image?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
+      >;
+      products: {
+        nodes: Array<
           Pick<
-            StorefrontAPI.Image,
-            'id' | 'url' | 'altText' | 'width' | 'height'
-          >
+            StorefrontAPI.Product,
+            | 'id'
+            | 'title'
+            | 'handle'
+            | 'description'
+            | 'tags'
+            | 'availableForSale'
+          > & {
+            featuredImage?: StorefrontAPI.Maybe<
+              Pick<
+                StorefrontAPI.Image,
+                'id' | 'url' | 'altText' | 'width' | 'height'
+              >
+            >;
+            priceRange: {
+              minVariantPrice: Pick<
+                StorefrontAPI.MoneyV2,
+                'amount' | 'currencyCode'
+              >;
+            };
+            variants: {
+              nodes: Array<
+                Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
+              >;
+            };
+            badge?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
+            dosage?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            highlight?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            packSize?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+          }
         >;
-        products: {
-          nodes: Array<
-            Pick<
-              StorefrontAPI.Product,
-              | 'id'
-              | 'title'
-              | 'handle'
-              | 'description'
-              | 'tags'
-              | 'availableForSale'
-            > & {
-              featuredImage?: StorefrontAPI.Maybe<
-                Pick<
-                  StorefrontAPI.Image,
-                  'id' | 'url' | 'altText' | 'width' | 'height'
-                >
-              >;
-              priceRange: {
-                minVariantPrice: Pick<
-                  StorefrontAPI.MoneyV2,
-                  'amount' | 'currencyCode'
-                >;
-              };
-              variants: {
-                nodes: Array<
-                  Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'>
-                >;
-              };
-              badge?: StorefrontAPI.Maybe<
-                Pick<StorefrontAPI.Metafield, 'value'>
-              >;
-              dosage?: StorefrontAPI.Maybe<
-                Pick<StorefrontAPI.Metafield, 'value'>
-              >;
-              highlight?: StorefrontAPI.Maybe<
-                Pick<StorefrontAPI.Metafield, 'value'>
-              >;
-              packSize?: StorefrontAPI.Maybe<
-                Pick<StorefrontAPI.Metafield, 'value'>
-              >;
-            }
-          >;
-        };
-      }
-    >;
-  };
-};
-
-export type RecommendedProductFragment = Pick<
-  StorefrontAPI.Product,
-  'id' | 'title' | 'handle'
-> & {
-  priceRange: {
-    minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-  };
-  featuredImage?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
+      };
+    }
   >;
-};
-
-export type RecommendedProductsQueryVariables = StorefrontAPI.Exact<{
-  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
-  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
-}>;
-
-export type RecommendedProductsQuery = {
-  products: {
-    nodes: Array<
-      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
-        priceRange: {
-          minVariantPrice: Pick<
-            StorefrontAPI.MoneyV2,
-            'amount' | 'currencyCode'
-          >;
-        };
-        featuredImage?: StorefrontAPI.Maybe<
-          Pick<
-            StorefrontAPI.Image,
-            'id' | 'url' | 'altText' | 'width' | 'height'
-          >
-        >;
-      }
-    >;
-  };
 };
 
 export type FavoriteProductFragment = Pick<
@@ -1471,13 +1427,9 @@ interface GeneratedQueryTypes {
     return: FooterQuery;
     variables: FooterQueryVariables;
   };
-  '#graphql\n  fragment HomeGridProduct on Product {\n    id\n    title\n    handle\n    description\n    tags\n    availableForSale\n    featuredImage {\n      id\n      url\n      altText\n      width\n      height\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n      }\n    }\n    badge: metafield(namespace: "custom", key: "badge") {\n      value\n    }\n    dosage: metafield(namespace: "custom", key: "dosage") {\n      value\n    }\n    highlight: metafield(namespace: "custom", key: "highlight") {\n      value\n    }\n    packSize: metafield(namespace: "custom", key: "pack_size") {\n      value\n    }\n  }\n  fragment FeaturedCollection on Collection {\n    id\n    title\n    image {\n      id\n      url\n      altText\n      width\n      height\n    }\n    handle\n    products(first: 4) {\n      nodes {\n        ...HomeGridProduct\n      }\n    }\n  }\n  query FeaturedCollection($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {\n      nodes {\n        ...FeaturedCollection\n      }\n    }\n  }\n': {
+  '#graphql\n  fragment HomeGridProduct on Product {\n    id\n    title\n    handle\n    description\n    tags\n    availableForSale\n    featuredImage {\n      id\n      url\n      altText\n      width\n      height\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n      }\n    }\n    badge: metafield(namespace: "custom", key: "badge") {\n      value\n    }\n    dosage: metafield(namespace: "custom", key: "dosage") {\n      value\n    }\n    highlight: metafield(namespace: "custom", key: "highlight") {\n      value\n    }\n    packSize: metafield(namespace: "custom", key: "pack_size") {\n      value\n    }\n  }\n  fragment FeaturedCollection on Collection {\n    id\n    title\n    image {\n      id\n      url\n      altText\n      width\n      height\n    }\n    handle\n    products(first: 4) {\n      nodes {\n        ...HomeGridProduct\n      }\n    }\n  }\n  query FeaturedCollection(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      ...FeaturedCollection\n    }\n  }\n': {
     return: FeaturedCollectionQuery;
     variables: FeaturedCollectionQueryVariables;
-  };
-  '#graphql\n  fragment RecommendedProduct on Product {\n    id\n    title\n    handle\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    featuredImage {\n      id\n      url\n      altText\n      width\n      height\n    }\n  }\n  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    products(first: 4, sortKey: UPDATED_AT, reverse: true) {\n      nodes {\n        ...RecommendedProduct\n      }\n    }\n  }\n': {
-    return: RecommendedProductsQuery;
-    variables: RecommendedProductsQueryVariables;
   };
   '#graphql\n  fragment FavoriteProduct on Product {\n    id\n    title\n    handle\n    description\n    tags\n    featuredImage {\n      id\n      url\n      altText\n      width\n      height\n    }\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n      }\n    }\n    badge: metafield(namespace: "custom", key: "badge") {\n      value\n    }\n    dosage: metafield(namespace: "custom", key: "dosage") {\n      value\n    }\n    packSize: metafield(namespace: "custom", key: "pack_size") {\n      value\n    }\n    rating: metafield(namespace: "reviews", key: "rating") {\n      value\n    }\n    ratingCount: metafield(namespace: "reviews", key: "rating_count") {\n      value\n    }\n  }\n  query HomeFavorites(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      handle\n      products(first: 4) {\n        nodes {\n          ...FavoriteProduct\n        }\n      }\n    }\n  }\n': {
     return: HomeFavoritesQuery;

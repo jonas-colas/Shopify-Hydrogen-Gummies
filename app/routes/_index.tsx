@@ -19,17 +19,14 @@ export async function loader(args: Route.LoaderArgs) {
   return {...deferredData, ...criticalData};
 }
 
-/**
- * Data needed above the fold: hero and product grid.
- * If it's unavailable, the whole page should 400 or 500 error.
- */
 async function loadCriticalData({context}: Route.LoaderArgs) {
-  const {collections} = await context.storefront.query(
+  const {collection} = await context.storefront.query(
     FEATURED_COLLECTION_QUERY,
+    {variables: {handle: FEATURED_COLLECTION}},
   );
 
   return {
-    featuredCollection: collections.nodes[0],
+    featuredCollection: collection ?? undefined,
   };
 }
 
@@ -63,6 +60,10 @@ export default function Homepage() {
     </>
   );
 }
+
+/** Collection behind the homepage hero and product grid */
+const FEATURED_COLLECTION = 'kanha-gummies';
+
 
 const FEATURED_COLLECTION_QUERY = `#graphql
   fragment HomeGridProduct on Product {
@@ -121,12 +122,13 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       }
     }
   }
-  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...FeaturedCollection
-      }
+  query FeaturedCollection(
+    $handle: String!
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    collection(handle: $handle) {
+      ...FeaturedCollection
     }
   }
 ` as const;
