@@ -5,6 +5,8 @@ import { TrustStripMobile } from './TrustStrip';
 import { ScienceMobile } from './ScienceSection';
 import { FavoritesMobile } from './Favorites';
 import { ReviewsMobile } from './Reviews';
+import { GuaranteeMobile } from './Guarantee';
+import { FaqMobile } from './Faq';
 
 export function HomeMobile({data}: {data: HomeData}) {
   return (
@@ -15,6 +17,8 @@ export function HomeMobile({data}: {data: HomeData}) {
       <ScienceMobile />
       <FavoritesMobile favorites={data.favorites} />
       <ReviewsMobile />
+      <GuaranteeMobile />
+      <FaqMobile />
     </>
   );
 }

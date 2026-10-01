@@ -5,6 +5,8 @@ import { TrustStripDesktop } from './TrustStrip';
 import { ScienceDesktop } from './ScienceSection';
 import { FavoritesDesktop } from './Favorites';
 import { ReviewsDesktop } from './Reviews';
+import { GuaranteeDesktop } from './Guarantee';
+import { FaqDesktop } from './Faq';
 
 export function HomeDesktop({data}: {data: HomeData}) {
   return (
@@ -15,6 +17,8 @@ export function HomeDesktop({data}: {data: HomeData}) {
       <ScienceDesktop />
       <FavoritesDesktop favorites={data.favorites} />
       <ReviewsDesktop />
+      <GuaranteeDesktop />
+      <FaqDesktop />
     </>
   );
 }
