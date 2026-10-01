@@ -8,9 +8,7 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
-import {ProductPrice} from '~/components/ProductPrice';
-import {ProductImage} from '~/components/ProductImage';
-import {ProductForm} from '~/components/ProductForm';
+import { ProductDesktop, ProductMobile } from '~/components/product/ProductLayouts';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 export const meta: Route.MetaFunction = ({data}) => {
@@ -95,47 +93,40 @@ export default function Product() {
     selectedOrFirstAvailableVariant: selectedVariant,
   });
 
-  const {title, descriptionHtml} = product;
+  // const {title, descriptionHtml} = product;
 
-  return (
-    <div className="product">
-      <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <h1>{title}</h1>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
+    return (
+      <>
+        <div className="md:hidden">
+          <ProductMobile
+            product={product}
+            selectedVariant={selectedVariant}
+            productOptions={productOptions}
+          />
+        </div>
+        <div className="hidden md:block">
+          <ProductDesktop
+            product={product}
+            selectedVariant={selectedVariant}
+            productOptions={productOptions}
+          />
+        </div>
+        <Analytics.ProductView
+          data={{
+            products: [
+              {
+                id: product.id,
+                title: product.title,
+                price: selectedVariant?.price.amount || '0',
+                vendor: product.vendor,
+                variantId: selectedVariant?.id || '',
+                variantTitle: selectedVariant?.title || '',
+                quantity: 1,
+              },
+            ],
+          }}
         />
-        <br />
-        <ProductForm
-          productOptions={productOptions}
-          selectedVariant={selectedVariant}
-        />
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
-      </div>
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product.id,
-              title: product.title,
-              price: selectedVariant?.price.amount || '0',
-              vendor: product.vendor,
-              variantId: selectedVariant?.id || '',
-              variantTitle: selectedVariant?.title || '',
-              quantity: 1,
-            },
-          ],
-        }}
-      />
-    </div>
+    </>
   );
 }
 
@@ -212,6 +203,36 @@ const PRODUCT_FRAGMENT = `#graphql
     seo {
       description
       title
+    }
+        images(first: 10) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
+    collections(first: 1) {
+      nodes {
+        handle
+        title
+      }
+    }
+    badge: metafield(namespace: "custom", key: "badge") {
+      value
+    }
+    dosage: metafield(namespace: "custom", key: "dosage") {
+      value
+    }
+    rating: metafield(namespace: "reviews", key: "rating") {
+      value
+    }
+    ratingCount: metafield(namespace: "reviews", key: "rating_count") {
+      value
+    }  
+    packSize: metafield(namespace: "custom", key: "pack_size") {
+      value
     }
   }
   ${PRODUCT_VARIANT_FRAGMENT}

@@ -1,3 +1,4 @@
+import { Stars } from "~/components/Stars";
 /**
  * Static testimonials from the design: placeholders until a reviews app
  * (Judge.me, Shopify Product Reviews…) is connected. Replace with real
@@ -31,27 +32,6 @@ const REVIEWS = [
     product: 'FX Tranquility Sleep (CBN)',
   },
 ];
-
-/** Row of 5 stars: filled up to the rating, outlined after */
-function Stars({rating, size}: {rating: number; size: string}) {
-  return (
-    <span
-      role="img"
-      aria-label={`Rated ${rating} out of 5`}
-      className="flex items-center text-secondary-container"
-    >
-      {Array.from({length: 5}, (_, index) => (
-        <span
-          key={index}
-          aria-hidden="true"
-          className={`icon ${size} ${index < rating ? 'icon-filled' : ''}`}
-        >
-          star
-        </span>
-      ))}
-    </span>
-  );
-}
 
 export function ReviewsDesktop() {
   return (
